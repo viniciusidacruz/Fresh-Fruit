@@ -26,4 +26,10 @@ export const theme = {
       BLACK: 900,
     },
   },
+
+  OTHERS: {
+    BORDER: {
+      RADIUS: "0.5rem",
+    },
+  },
 };
