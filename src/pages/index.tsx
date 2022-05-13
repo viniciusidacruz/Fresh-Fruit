@@ -1,10 +1,14 @@
+import React, { Fragment } from "react";
 import Head from "next/head";
-import { Fragment } from "react";
 import type { NextPage } from "next";
 
 import HeroSection from "components/Sections/Hero";
+import { useModal } from "hooks/useModal";
+import { ModalLogin } from "components/Modals/Login";
 
 const Home: NextPage = () => {
+  const { showModal } = useModal();
+
   return (
     <Fragment>
       <Head>
@@ -12,6 +16,8 @@ const Home: NextPage = () => {
       </Head>
 
       <HeroSection />
+
+      {showModal && <ModalLogin />}
     </Fragment>
   );
 };

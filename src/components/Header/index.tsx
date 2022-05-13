@@ -2,14 +2,18 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
 
-import { HeaderProps } from "./types";
-
-import * as S from "./styles";
 import Logo from "components/Logo";
 
-export function Header({ toggleSignIn }: HeaderProps) {
+import { useModal } from "hooks/useModal";
+import { useChangeBackground } from "hooks/useChangeBackground";
+
+import * as S from "./styles";
+
+export function Header() {
   const router = useRouter();
   const { data } = useSession();
+  const { handleCloseModal } = useModal();
+  const haveBackground = useChangeBackground();
 
   const isAuthorized = data?.user?.email;
   const username = data?.user?.name;
@@ -19,32 +23,32 @@ export function Header({ toggleSignIn }: HeaderProps) {
   };
 
   return (
-    <S.Content>
+    <S.Content haveBackground={haveBackground}>
       <S.Container className="container">
         <Logo />
 
         {!isAuthorized ? (
-          <S.Enter onClick={toggleSignIn}>
+          <S.Enter haveBackground={haveBackground} onClick={handleCloseModal}>
             <span>Entrar</span>
 
-            <S.EnterIcon />
+            <S.EnterIcon haveBackground={haveBackground} />
           </S.Enter>
         ) : (
-          <S.Enter>
+          <S.Enter haveBackground={haveBackground}>
             <S.GroupPriceInfo>
               <span>{username}</span>
               <span>R$ 1541,00</span>
             </S.GroupPriceInfo>
 
             <S.GroupImage>
-              <S.Cart />
+              <S.Cart haveBackground={haveBackground} />
 
               <div>
                 <span>2</span>
               </div>
             </S.GroupImage>
             <S.Logout onClick={() => signOutRemoveCredentials()}>
-              <S.SignOutIcon />
+              <S.SignOutIcon haveBackground={haveBackground} />
             </S.Logout>
           </S.Enter>
         )}

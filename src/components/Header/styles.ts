@@ -1,33 +1,37 @@
 import styled from "styled-components";
 
 import { CgEnter } from "react-icons/cg";
-import { AiOutlineShoppingCart } from "react-icons/ai";
 import { GoSignOut } from "react-icons/go";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 
-export const Content = styled.header`
+interface ChangeBackgroundProps {
+  haveBackground: boolean;
+}
+
+export const Content = styled.header<ChangeBackgroundProps>`
   position: sticky;
   top: 0;
   left: 0;
   right: 0;
+
   z-index: 999;
+
   height: 4rem;
   display: flex;
   align-items: center;
+
+  background-color: ${({ haveBackground }) => haveBackground && 'rgba(0, 0, 0, 0.8)'};
+
+  transition: all 0.8s;
 `;
 
 export const Container = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  ul {
-    @media (max-width: 768px) {
-      display: none;
-    }
-  }
 `;
 
-export const Enter = styled.div`
+export const Enter = styled.div<ChangeBackgroundProps>`
   display: flex;
   align-items: center;
 
@@ -37,11 +41,7 @@ export const Enter = styled.div`
     margin-right: 10px;
 
     font-weight: ${({ theme }) => theme.FONTS.WEIGHT.BOLD};
-    color: ${({ theme }) => theme.COLORS.DARK};
-  }
-
-  @media (max-width: 768px) {
-    display: none;
+    color: ${({ theme, haveBackground }) => haveBackground ? theme.COLORS.SHAPE : theme.COLORS.DARK};
   }
 `;
 
@@ -67,12 +67,16 @@ export const GroupImage = styled.div`
   }
 `;
 
-export const Cart = styled(AiOutlineShoppingCart)`
+export const Cart = styled(AiOutlineShoppingCart)<ChangeBackgroundProps>`
   font-size: 2rem;
+
+  color: ${({ theme, haveBackground }) => haveBackground ? theme.COLORS.SHAPE : theme.COLORS.DARK};
 `;
 
-export const EnterIcon = styled(CgEnter)`
+export const EnterIcon = styled(CgEnter)<ChangeBackgroundProps>`
   font-size: 2rem;
+
+  color: ${({ theme, haveBackground }) => haveBackground ? theme.COLORS.SHAPE : theme.COLORS.DARK};
 `;
 
 export const GroupPriceInfo = styled.div`
@@ -91,7 +95,7 @@ export const Logout = styled.button`
   margin-left: 2rem;
 `;
 
-export const SignOutIcon = styled(GoSignOut)`
-  color: ${({ theme }) => theme.COLORS.DARK};
+export const SignOutIcon = styled(GoSignOut)<ChangeBackgroundProps>`
+  color: ${({ theme, haveBackground }) => haveBackground ? theme.COLORS.SHAPE : theme.COLORS.DARK};
   font-size: 1.5rem;
 `;

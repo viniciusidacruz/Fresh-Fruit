@@ -13,10 +13,6 @@ export const GlobalStyle = createGlobalStyle`
     font-family: ${({ theme }) => theme.FONTS.FAMILY.DEFAULT};
   }
 
-  section {
-    margin-bottom: 4rem;
-  }
-
   a {
     text-decoration: none;
     transition: filter 0.2s;
