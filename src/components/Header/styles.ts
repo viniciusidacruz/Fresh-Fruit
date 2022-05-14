@@ -20,7 +20,8 @@ export const Content = styled.header<ChangeBackgroundProps>`
   display: flex;
   align-items: center;
 
-  background-color: ${({ haveBackground }) => haveBackground && 'rgba(0, 0, 0, 0.8)'};
+  background-color: ${({ haveBackground }) =>
+    haveBackground && "rgba(0, 0, 0, 0.8)"};
 
   transition: all 0.8s;
 `;
@@ -41,7 +42,8 @@ export const Enter = styled.div<ChangeBackgroundProps>`
     margin-right: 10px;
 
     font-weight: ${({ theme }) => theme.FONTS.WEIGHT.BOLD};
-    color: ${({ theme, haveBackground }) => haveBackground ? theme.COLORS.SHAPE : theme.COLORS.DARK};
+    color: ${({ theme, haveBackground }) =>
+      haveBackground ? theme.COLORS.SHAPE : theme.COLORS.DARK};
   }
 `;
 
@@ -51,18 +53,25 @@ export const GroupImage = styled.div`
   > div {
     height: 20px;
     width: 20px;
+
     border-radius: 50%;
+    position: absolute;
     top: -8px;
     right: -10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     background-color: ${({ theme }) => theme.COLORS.ORANGE_400};
-    position: absolute;
 
     span {
       font-size: 12px;
       color: white;
+
       position: absolute;
-      left: 6px;
-      top: 1px;
+      left: 3px;
+      top: 3px;
     }
   }
 `;
@@ -70,13 +79,15 @@ export const GroupImage = styled.div`
 export const Cart = styled(AiOutlineShoppingCart)<ChangeBackgroundProps>`
   font-size: 2rem;
 
-  color: ${({ theme, haveBackground }) => haveBackground ? theme.COLORS.SHAPE : theme.COLORS.DARK};
+  color: ${({ theme, haveBackground }) =>
+    haveBackground ? theme.COLORS.SHAPE : theme.COLORS.DARK};
 `;
 
 export const EnterIcon = styled(CgEnter)<ChangeBackgroundProps>`
   font-size: 2rem;
 
-  color: ${({ theme, haveBackground }) => haveBackground ? theme.COLORS.SHAPE : theme.COLORS.DARK};
+  color: ${({ theme, haveBackground }) =>
+    haveBackground ? theme.COLORS.SHAPE : theme.COLORS.DARK};
 `;
 
 export const GroupPriceInfo = styled.div`
@@ -96,6 +107,7 @@ export const Logout = styled.button`
 `;
 
 export const SignOutIcon = styled(GoSignOut)<ChangeBackgroundProps>`
-  color: ${({ theme, haveBackground }) => haveBackground ? theme.COLORS.SHAPE : theme.COLORS.DARK};
+  color: ${({ theme, haveBackground }) =>
+    haveBackground ? theme.COLORS.SHAPE : theme.COLORS.DARK};
   font-size: 1.5rem;
 `;

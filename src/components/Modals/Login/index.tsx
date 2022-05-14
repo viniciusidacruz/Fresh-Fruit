@@ -8,7 +8,7 @@ import { useModal } from "hooks/useModal";
 
 import * as S from "./styles";
 
-export function ModalLogin() {
+export default function ModalLogin() {
   const { handleCloseModal } = useModal();
 
   return (

@@ -8,7 +8,11 @@ import { useChangeBackground } from "hooks/useChangeBackground";
 
 import { Content } from "./styles";
 
-export default function Logo() {
+interface LogoProps {
+  full?: boolean;
+}
+
+export default function Logo({ full }: LogoProps) {
   const haveBackground = useChangeBackground();
 
   return (
@@ -16,7 +20,7 @@ export default function Logo() {
       <Content haveBackground={haveBackground}>
         <Image src={urlLogo} alt="Logo do Fresh Fruit" width={48} height={48} />
 
-        <span>Logo</span>
+        {full && <span>Logo</span>}
       </Content>
     </Link>
   );

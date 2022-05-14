@@ -8,15 +8,19 @@ import { useModal } from "hooks/useModal";
 import { useChangeBackground } from "hooks/useChangeBackground";
 
 import * as S from "./styles";
+import { useCart } from "hooks/useCart";
+import { CartItemProps } from "./types";
 
 export function Header() {
   const router = useRouter();
   const { data } = useSession();
+  const { cartItems, totalCheckout } = useCart<CartItemProps>();
   const { handleCloseModal } = useModal();
   const haveBackground = useChangeBackground();
 
   const isAuthorized = data?.user?.email;
   const username = data?.user?.name;
+  const count = cartItems && cartItems.length;
 
   const signOutRemoveCredentials = () => {
     signOut();
@@ -25,7 +29,7 @@ export function Header() {
   return (
     <S.Content haveBackground={haveBackground}>
       <S.Container className="container">
-        <Logo />
+        <Logo full />
 
         {!isAuthorized ? (
           <S.Enter haveBackground={haveBackground} onClick={handleCloseModal}>
@@ -37,15 +41,17 @@ export function Header() {
           <S.Enter haveBackground={haveBackground}>
             <S.GroupPriceInfo>
               <span>{username}</span>
-              <span>R$ 1541,00</span>
+              <span>R$ {totalCheckout.toFixed(2)}</span>
             </S.GroupPriceInfo>
 
-            <S.GroupImage>
+            <S.GroupImage onClick={() => router.push("/cart")}>
               <S.Cart haveBackground={haveBackground} />
 
-              <div>
-                <span>2</span>
-              </div>
+              {count && (
+                <div>
+                  <span>{count}</span>
+                </div>
+              )}
             </S.GroupImage>
             <S.Logout onClick={() => signOutRemoveCredentials()}>
               <S.SignOutIcon haveBackground={haveBackground} />
