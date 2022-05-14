@@ -13,14 +13,8 @@ class CartService {
   }
 
   async removeCart(id: string) {
-    const response = await API.delete(`/checkout/${id}.json`);
-    const { data } = response;
-
-    if (data) {
-      return data;
-    } else {
-      throw new Error();
-    }
+    console.log("ok", id);
+    await API.delete(`/checkout/${id}.json`);
   }
 }
 

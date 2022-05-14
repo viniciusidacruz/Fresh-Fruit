@@ -20,7 +20,7 @@ export function Header() {
 
   const isAuthorized = data?.user?.email;
   const username = data?.user?.name;
-  const count = cartItems && cartItems.length;
+  const count = cartItems && cartItems.length > 0 && cartItems.length;
 
   const signOutRemoveCredentials = () => {
     signOut();

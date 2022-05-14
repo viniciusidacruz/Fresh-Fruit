@@ -1,18 +1,24 @@
 import React, { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-import { API } from "common/services/api";
 import CartService from "common/services/ServiceClient";
 
-import { CartProviderProps, CartContextProps, CartItemProps } from "./types";
+import { CartProviderProps, CartContextProps } from "./types";
+import { CartItemProps } from "pages/cart/types";
 
 export const CartContext = createContext({} as CartContextProps);
 
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [cartItems, setCartItems] = useState<any>([]);
-  const [isFetching, setFetching] = useState(true);
 
-  const serviceAddToCart = new CartService();
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const response = window.localStorage.getItem("@Cart");
+      const product = response && JSON.parse(response);
+
+      setCartItems(product);
+    }
+  }, []);
 
   const prices =
     cartItems &&
@@ -24,34 +30,24 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     ?.filter((x: number) => x > 0)
     .reduce((x: number, y: number) => x + y, 0);
 
-  useEffect(() => {
-    const getCheckout = () => {
-      API.get("checkout.json").then((response) => {
-        setFetching(false);
-        setCartItems(Object.values(response.data));
-      });
-    };
-
-    getCheckout();
-  }, []);
-
   const addToCart = (product: {}) => {
-    try {
-      serviceAddToCart.addToCart(product).then(() => {
-        setCartItems([...cartItems, product]);
-        toast.success("Produto adicionado ao carrinho");
-      });
-    } catch (err) {
-      toast.error("Ops, algo deu errado");
+    setCartItems([...cartItems, product]);
+
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("@Cart", JSON.stringify(cartItems));
     }
   };
 
-  const removeFromCart = (id: string) => {
-    try {
-      serviceAddToCart.removeCart(id).then(() => {
-        toast.success("Removido do carrinho");
-      });
-    } catch (error) {}
+  const removeFromCart = (index: number) => {
+    const listCheckout = [...cartItems];
+
+    listCheckout.splice(index, 1);
+
+    setCartItems(listCheckout);
+
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem("@Cart");
+    }
   };
 
   return (
@@ -59,9 +55,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       value={{
         cartItems,
         addToCart,
-        removeFromCart,
-        isFetching,
         totalCheckout,
+        removeFromCart,
       }}
     >
       {children}

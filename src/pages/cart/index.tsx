@@ -13,9 +13,7 @@ import { CartItemProps } from "./types";
 import * as S from "./styles";
 
 export default function Cart() {
-  // const [instance, updateInstance] = usePDF({ document: PDFDocument });
-
-  const { cartItems, isFetching, removeFromCart, totalCheckout } = useCart();
+  const { cartItems, removeFromCart, totalCheckout } = useCart();
 
   const appleQty =
     cartItems &&
@@ -46,38 +44,36 @@ export default function Cart() {
     <S.Main>
       <div className="container">
         <S.Content>
-          {isFetching ? (
-            <Loading />
-          ) : (
+          {cartItems.length > 0 ? (
             <Fragment>
-              {cartItems &&
-                cartItems.length > 0 &&
-                cartItems.map((itemInList: CartItemProps, index: number) => {
-                  return (
-                    <S.Card key={`${itemInList.title} - ${index}`}>
-                      <Image
-                        src={itemInList.thumbnail.path}
-                        alt={itemInList.thumbnail.path}
-                        width={200}
-                        height={200}
-                      />
+              {cartItems?.map((itemInList: CartItemProps, index: number) => {
+                return (
+                  <S.Card key={itemInList.id}>
+                    <Image
+                      src={itemInList.thumbnail.path}
+                      alt={itemInList.thumbnail.path}
+                      width={200}
+                      height={200}
+                    />
 
-                      <S.Info>
-                        <div>
-                          <h2>{itemInList.title}</h2>
-                          <h3>Tipo: {itemInList.category}</h3>
-                        </div>
+                    <S.Info>
+                      <div>
+                        <h2>{itemInList.title}</h2>
+                        <h3>Tipo: {itemInList.category}</h3>
+                      </div>
 
-                        <button
-                          onClick={() => removeFromCart(itemInList.category)}
-                        >
-                          remove
-                        </button>
-                      </S.Info>
-                    </S.Card>
-                  );
-                })}
+                      <button onClick={() => removeFromCart(index)}>
+                        remove
+                      </button>
+                    </S.Info>
+                  </S.Card>
+                );
+              })}
             </Fragment>
+          ) : (
+            <S.NotFound>
+              <h3>Não tem produto</h3>
+            </S.NotFound>
           )}
         </S.Content>
 
@@ -86,11 +82,11 @@ export default function Cart() {
             <span>Total: {totalCheckout.toFixed(2)}</span>
 
             <ul>
-              <li>Maçã: [{appleQty.length}]</li>
-              <li>Pêra: [{pearQty.length}]</li>
-              <li>Abacaxi: [{pineapleQty.length}]</li>
-              <li>Banana: [{bananaQty.length}]</li>
-              <li>Manga: [{mangoQty.length}]</li>
+              <li>Maçã: [{appleQty ? appleQty.length : "0"}]</li>
+              <li>Pêra: [{pearQty ? pearQty.length : "0"}]</li>
+              <li>Abacaxi: [{pineapleQty ? pineapleQty.length : "0"}]</li>
+              <li>Banana: [{bananaQty ? bananaQty.length : "0"}]</li>
+              <li>Manga: [{mangoQty ? mangoQty.length : "0"}]</li>
             </ul>
           </S.InfoAside>
 

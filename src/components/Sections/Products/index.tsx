@@ -36,9 +36,9 @@ export default function ProductsSection() {
                   return fruit;
                 }
               })
-              .map((product: ContentProductProps) => (
-                <Product key={product.id} data={product} />
-              ))}
+              .map((product: ContentProductProps, index: number) => {
+                return <Product key={product.id} data={product} />;
+              })}
           </Fragment>
         )}
       </S.Container>

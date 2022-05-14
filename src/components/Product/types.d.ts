@@ -5,11 +5,11 @@ export interface ContentProductProps {
     prices: {
       offer: boolean;
       price: number;
-    },
+    };
     thumbnail: {
       alt: string;
       path: string;
-    },
+    };
     title: string;
-  }
+  };
 }

@@ -109,3 +109,9 @@ export const GenerateBoleto = styled.a`
 
   border-radius: ${({ theme }) => theme.OTHERS.BORDER.RADIUS};
 `;
+
+export const NotFound = styled.div`
+  width: 100%;
+
+  text-align: center;
+`;
