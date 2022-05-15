@@ -21,6 +21,7 @@ export function Header() {
   const isAuthorized = data?.user?.email;
   const username = data?.user?.name;
   const count = cartItems && cartItems.length > 0 && cartItems.length;
+  const total = totalCheckout > 0 ? totalCheckout.toFixed(2) : 0;
 
   const signOutRemoveCredentials = () => {
     signOut();
@@ -41,7 +42,7 @@ export function Header() {
           <S.Enter haveBackground={haveBackground}>
             <S.GroupPriceInfo>
               <span>{username}</span>
-              <span>R$ {totalCheckout.toFixed(2)}</span>
+              <span>R$ {total}</span>
             </S.GroupPriceInfo>
 
             <S.GroupImage onClick={() => router.push("/cart")}>
