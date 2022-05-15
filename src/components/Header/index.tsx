@@ -27,7 +27,7 @@ export function Header() {
     signOut();
 
     if (typeof window !== "undefined") {
-      window.localStorage.removeItem("@Cart");
+      window.sessionStorage.removeItem("@Cart");
     }
   };
 

@@ -23,10 +23,6 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   const addToCart = (product: {}) => {
     setCartItems([...cartItems, product]);
-
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem("@Cart", JSON.stringify(cartItems));
-    }
   };
 
   const removeFromCart = (index: number) => {
@@ -37,7 +33,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     setCartItems(listCheckout);
 
     if (typeof window !== "undefined") {
-      window.localStorage.removeItem("@Cart");
+      window.sessionStorage.removeItem("@Cart");
     }
   };
 
