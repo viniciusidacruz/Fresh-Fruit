@@ -11,6 +11,7 @@ import PDFDocument from "components/PDFDocument";
 import { CartItemProps } from "./types";
 
 import * as S from "./styles";
+import Head from "next/head";
 
 export default function Cart() {
   const { cartItems, removeFromCart, totalCheckout } = useCart();
@@ -40,71 +41,80 @@ export default function Cart() {
     cartItems.length > 0 &&
     cartItems.filter((fruit: CartItemProps) => fruit.title === "Pêra");
 
+  const total = totalCheckout > 0 ? totalCheckout.toFixed(2) : 0;
+
   return (
-    <S.Main>
-      <div className="container">
-        <S.Content>
-          {cartItems.length > 0 ? (
-            <Fragment>
-              {cartItems?.map((itemInList: CartItemProps, index: number) => {
-                return (
-                  <S.Card key={itemInList.id}>
-                    <Image
-                      src={itemInList.thumbnail.path}
-                      alt={itemInList.thumbnail.path}
-                      width={200}
-                      height={200}
-                    />
+    <Fragment>
+      <Head>
+        <title>Carrinho | Desenvolvido por Vinicius Italo</title>
+      </Head>
+      <S.Main>
+        <div className="container">
+          <S.Content>
+            {cartItems.length > 0 ? (
+              <Fragment>
+                {cartItems?.map((itemInList: CartItemProps, index: number) => {
+                  return (
+                    <S.Card key={itemInList.id}>
+                      <Image
+                        src={itemInList.thumbnail.path}
+                        alt={itemInList.thumbnail.path}
+                        width={200}
+                        height={200}
+                      />
 
-                    <S.Info>
-                      <div>
-                        <h2>{itemInList.title}</h2>
-                        <h3>Tipo: {itemInList.category}</h3>
-                      </div>
+                      <S.Info>
+                        <div>
+                          <h2>{itemInList.title}</h2>
+                          <h3>Tipo: {itemInList.category}</h3>
+                        </div>
 
-                      <button onClick={() => removeFromCart(index)}>
-                        remove
-                      </button>
-                    </S.Info>
-                  </S.Card>
-                );
-              })}
-            </Fragment>
-          ) : (
-            <S.NotFound>
-              <h3>Não tem produto</h3>
-            </S.NotFound>
-          )}
-        </S.Content>
-
-        <S.Aside>
-          <S.InfoAside>
-            <span>Total: {totalCheckout.toFixed(2)}</span>
-
-            <ul>
-              <li>Maçã: [{appleQty ? appleQty.length : "0"}]</li>
-              <li>Pêra: [{pearQty ? pearQty.length : "0"}]</li>
-              <li>Abacaxi: [{pineapleQty ? pineapleQty.length : "0"}]</li>
-              <li>Banana: [{bananaQty ? bananaQty.length : "0"}]</li>
-              <li>Manga: [{mangoQty ? mangoQty.length : "0"}]</li>
-            </ul>
-          </S.InfoAside>
-
-          <PDFDownloadLink
-            document={
-              <PDFDocument
-                cartItems={cartItems}
-                totalCheckout={totalCheckout}
-              />
-            }
-            fileName="boleto.pdf"
-          >
-            {({ blob, url, loading, error }) => (
-              <Button title={loading ? "Carregando PDF" : "Finalizar compra"} />
+                        <button onClick={() => removeFromCart(index)}>
+                          remove
+                        </button>
+                      </S.Info>
+                    </S.Card>
+                  );
+                })}
+              </Fragment>
+            ) : (
+              <S.NotFound>
+                <h3>Não tem produto</h3>
+              </S.NotFound>
             )}
-          </PDFDownloadLink>
-        </S.Aside>
-      </div>
-    </S.Main>
+          </S.Content>
+
+          <S.Aside>
+            <S.InfoAside>
+              <span>Total: {total}</span>
+
+              <ul>
+                <li>Maçã: [{appleQty ? appleQty.length : "0"}]</li>
+                <li>Pêra: [{pearQty ? pearQty.length : "0"}]</li>
+                <li>Abacaxi: [{pineapleQty ? pineapleQty.length : "0"}]</li>
+                <li>Banana: [{bananaQty ? bananaQty.length : "0"}]</li>
+                <li>Manga: [{mangoQty ? mangoQty.length : "0"}]</li>
+              </ul>
+            </S.InfoAside>
+
+            <PDFDownloadLink
+              document={
+                <PDFDocument
+                  cartItems={cartItems}
+                  totalCheckout={totalCheckout}
+                />
+              }
+              fileName="boleto.pdf"
+            >
+              {({ blob, url, loading, error }) => (
+                <Button
+                  title={loading ? "Carregando PDF" : "Finalizar compra"}
+                />
+              )}
+            </PDFDownloadLink>
+          </S.Aside>
+        </div>
+      </S.Main>
+    </Fragment>
   );
 }

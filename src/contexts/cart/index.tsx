@@ -1,8 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-import CartService from "common/services/ServiceClient";
-
 import { CartProviderProps, CartContextProps } from "./types";
 import { CartItemProps } from "pages/cart/types";
 
@@ -11,24 +9,17 @@ export const CartContext = createContext({} as CartContextProps);
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [cartItems, setCartItems] = useState<any>([]);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const response = window.localStorage.getItem("@Cart");
-      const product = response && JSON.parse(response);
-
-      setCartItems(product);
-    }
-  }, []);
-
   const prices =
-    cartItems &&
+    cartItems.length > 0 &&
     cartItems.map((product: CartItemProps) => {
-      return product.prices.price;
+      return product?.prices?.price;
     });
 
-  const totalCheckout = prices
-    ?.filter((x: number) => x > 0)
-    .reduce((x: number, y: number) => x + y, 0);
+  const totalCheckout =
+    prices &&
+    prices
+      ?.filter((x: number) => x > 0)
+      .reduce((x: number, y: number) => x + y, 0);
 
   const addToCart = (product: {}) => {
     setCartItems([...cartItems, product]);

@@ -25,6 +25,10 @@ export function Header() {
 
   const signOutRemoveCredentials = () => {
     signOut();
+
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem("@Cart");
+    }
   };
 
   return (
